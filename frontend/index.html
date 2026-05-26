@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Misbah's Magic — Professional Reconciliation Tool</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════
+       LOGIN SCREEN
+  ══════════════════════════════════════════════════ -->
+  <div id="login-screen" class="screen active">
+    <div class="login-card">
+      <div class="login-logo">✨</div>
+      <h1>Misbah's Magic</h1>
+      <p>Professional Bank & QuickBooks Reconciliation Tool</p>
+
+      <div id="error-alert" class="alert alert-error" style="display:none; text-align:left;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="password-input">Access Password</label>
+          <input
+            id="password-input"
+            type="password"
+            class="form-input"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+        <button id="login-btn" type="submit" class="btn btn-primary btn-lg" style="width:100%;">
+          🔓 Access Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       MAIN APP SCREEN
+  ══════════════════════════════════════════════════ -->
+  <div id="app-screen" class="screen">
+
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <span>✨</span> Misbah's Magic
+      </div>
+      <div class="header-actions">
+        <button
+          id="download-btn"
+          class="btn btn-success"
+          style="display:none;"
+        >
+          ⬇ Download Report
+        </button>
+        <button id="logout-btn" class="btn btn-ghost">🚪 Logout</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+      <!-- ── Upload Section ── -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="card-header">
+          <span style="font-size:20px;">📂</span>
+          <span class="card-title">Upload Files & Run Reconciliation</span>
+        </div>
+        <div class="card-body">
+
+          <!-- Mode Toggle -->
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="excel">
+              <span class="mode-icon">📊</span>
+              Excel Mode
+              <br /><small style="font-weight:400; opacity:0.8;">Bank Excel + QuickBooks Excel</small>
+            </button>
+            <button class="mode-btn" data-mode="pdf">
+              <span class="mode-icon">🤖</span>
+              AI PDF Mode
+              <br /><small style="font-weight:400; opacity:0.8;">Bank PDF + QuickBooks Excel (Gemini AI)</small>
+            </button>
+          </div>
+
+          <!-- File Uploads -->
+          <div class="upload-grid">
+            <!-- Bank File -->
+            <div>
+              <p class="form-label">🏦 Bank Statement</p>
+              <div class="upload-area" id="bank-upload-area">
+                <input type="file" id="bank-file-input" accept=".xlsx,.xls,.csv" />
+                <div class="upload-icon">📄</div>
+                <div class="upload-label" id="bank-upload-label">Bank Statement (Excel/CSV)</div>
+                <div class="upload-hint" id="bank-upload-hint">Supports .xlsx, .xls, .csv</div>
+                <div class="upload-filename" id="bank-filename"></div>
+              </div>
+            </div>
+
+            <!-- QuickBooks File -->
+            <div>
+              <p class="form-label">📒 QuickBooks Data</p>
+              <div class="upload-area" id="qb-upload-area">
+                <input type="file" id="qb-file-input" accept=".xlsx,.xls,.csv" />
+                <div class="upload-icon">📊</div>
+                <div class="upload-label">QuickBooks Export (Excel/CSV)</div>
+                <div class="upload-hint">Supports .xlsx, .xls, .csv</div>
+                <div class="upload-filename" id="qb-filename"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Alert -->
+          <div id="error-alert" class="alert alert-error" style="display:none;"></div>
+
+          <!-- Progress -->
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Processing...</span>
+              <span>0%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill"></div>
+            </div>
+          </div>
+
+          <!-- Run Button -->
+          <div style="text-align:center; margin-top:8px;">
+            <button id="reconcile-btn" class="btn btn-primary btn-lg">
+              ▶ Run Reconciliation
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── Results Section ── -->
+      <div id="results-section">
+
+        <!-- Summary Stats -->
+        <div class="stats-grid" id="stats-grid" style="display:none;">
+          <div class="stat-card matched">
+            <div class="stat-num" id="stat-matched">—</div>
+            <div class="stat-label">✅ Matched</div>
+          </div>
+          <div class="stat-card missing">
+            <div class="stat-num" id="stat-missing-qb">—</div>
+            <div class="stat-label">❌ Missing in QB</div>
+          </div>
+          <div class="stat-card missing">
+            <div class="stat-num" id="stat-missing-bank">—</div>
+            <div class="stat-label">❌ Missing in Bank</div>
+          </div>
+          <div class="stat-card duplicate">
+            <div class="stat-num" id="stat-duplicates">—</div>
+            <div class="stat-label">⚠️ Duplicates</div>
+          </div>
+          <div class="stat-card discrepancy">
+            <div class="stat-num" id="stat-discrepancies">—</div>
+            <div class="stat-label">🔄 Discrepancies</div>
+          </div>
+        </div>
+
+        <!-- Results Card -->
+        <div class="card" id="results-card" style="display:none;">
+          <div class="card-body">
+
+            <!-- Search -->
+            <div class="search-bar">
+              <input
+                type="text"
+                id="search-input"
+                placeholder="🔍 Search transactions..."
+              />
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="matched">
+                ✅ Matched <span class="tab-badge" id="badge-matched">0</span>
+              </button>
+              <button class="tab-btn" data-tab="missing-qb">
+                ❌ Missing in QB <span class="tab-badge" id="badge-missing-qb">0</span>
+              </button>
+              <button class="tab-btn" data-tab="missing-bank">
+                ❌ Missing in Bank <span class="tab-badge" id="badge-missing-bank">0</span>
+              </button>
+              <button class="tab-btn" data-tab="duplicates">
+                ⚠️ Duplicates <span class="tab-badge" id="badge-duplicates">0</span>
+              </button>
+              <button class="tab-btn" data-tab="discrepancies">
+                🔄 Discrepancies <span class="tab-badge" id="badge-discrepancies">0</span>
+              </button>
+            </div>
+
+            <!-- Tab Panels -->
+            <div class="tab-panel active" data-tab="matched">
+              <div id="table-matched">
+                <div class="empty-state">
+                  <div class="empty-icon">📊</div>
+                  <p>Run reconciliation to see results</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-tab="missing-qb">
+              <div id="table-missing-qb"></div>
+            </div>
+
+            <div class="tab-panel" data-tab="missing-bank">
+              <div id="table-missing-bank"></div>
+            </div>
+
+            <div class="tab-panel" data-tab="duplicates">
+              <div id="table-duplicates"></div>
+            </div>
+
+            <div class="tab-panel" data-tab="discrepancies">
+              <div id="table-discrepancies"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      Misbah's Magic &copy; 2024 — Professional Bank Reconciliation Tool
+    </footer>
+
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Show stats/results when reconciliation completes -->
+  <script>
+    // Hook into renderResults to show hidden sections
+    const _origRender = window.renderResults;
+    document.addEventListener("DOMContentLoaded", () => {
+      const origReconcile = window.handleReconcile;
+    });
+
+    // Patch renderResults to show sections
+    const origRenderResults = renderResults;
+    function renderResults(result) {
+      document.getElementById("stats-grid").style.display = "grid";
+      document.getElementById("results-card").style.display = "block";
+      origRenderResults(result);
+    }
+  </script>
+
+</body>
+</html>
