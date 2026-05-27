@@ -13,8 +13,8 @@ if ! python3 -c "import flask" 2>/dev/null; then
 fi
 
 # Start backend
-echo "🚀 Backend starting on http://localhost:5000"
-echo "🌐 Open frontend/index.html in your browser"
+echo "🚀 Backend starting on http://localhost:8080"
+echo "🌐 Open http://localhost:8080 in your browser"
 echo ""
 echo "Press Ctrl+C to stop"
 echo ""

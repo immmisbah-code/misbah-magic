@@ -1,0 +1,59 @@
+/* ============================================================
+   Base — reset, typography, body
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Screen system ── */
+.screen { display: none; }
+.screen.active { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--clr-border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--clr-muted); }
+
+/* ── Selection ── */
+::selection { background: var(--clr-primary-light); color: var(--clr-primary); }
+
+/* ── Focus ring ── */
+:focus-visible {
+  outline: 2px solid var(--clr-accent);
+  outline-offset: 2px;
+}
+
+/* ── Typography helpers ── */
+h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; }
+a { color: var(--clr-primary-mid); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.text-muted  { color: var(--clr-text-soft); }
+.text-danger { color: var(--clr-danger); }
+.text-sm     { font-size: 12px; }
+.text-xs     { font-size: 11px; }
+.font-mono   { font-family: var(--font-mono); }
+
+/* ── Responsive container ── */
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 var(--space-md); }
+}

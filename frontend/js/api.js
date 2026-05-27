@@ -3,7 +3,7 @@
  * Handles all communication with the Python Flask backend.
  */
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "http://localhost:8080/api";
 
 const Api = {
 

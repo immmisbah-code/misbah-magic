@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: misbah-magic
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: gunicorn --chdir backend "app:create_app()" --bind 0.0.0.0:$PORT --workers 2
+
+    envVars:
+      # Users — format: "username1:password1,username2:password2"
+      # Change these in Render dashboard → Environment
+      - key: USERS
+        value: misbah:misbah2024
+
+      # Gemini API Key — required for PDF mode
+      # Set this in Render dashboard → Environment (keep it secret!)
+      - key: GEMINI_API_KEY
+        value: your_gemini_api_key_here
+
+      - key: DEBUG
+        value: false

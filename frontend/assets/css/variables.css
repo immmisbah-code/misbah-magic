@@ -1,0 +1,66 @@
+/* ============================================================
+   Design Tokens — Misbah's Magic v2.0
+   One source of truth for all visual properties.
+   ============================================================ */
+
+:root {
+  /* ── Brand ── */
+  --clr-primary:       #7C3AED;   /* vibrant violet */
+  --clr-primary-dark:  #5B21B6;
+  --clr-primary-mid:   #8B5CF6;
+  --clr-primary-light: #EDE9FE;
+  --clr-accent:        #10B981;   /* emerald — finance/money feel */
+  --clr-accent-light:  #D1FAE5;
+
+  /* ── Semantic ── */
+  --clr-success:  #059669;
+  --clr-danger:   #DC2626;
+  --clr-warning:  #D97706;
+  --clr-info:     #2563EB;
+
+  /* ── Neutrals ── */
+  --clr-bg:        #F8FAFC;
+  --clr-surface:   #FFFFFF;
+  --clr-border:    #E2E8F0;
+  --clr-muted:     #94A3B8;
+  --clr-text:      #0F172A;
+  --clr-text-soft: #475569;
+
+  /* ── Table tints ── */
+  --tint-matched:     #F0FDF4;
+  --tint-missing:     #FFF1F2;
+  --tint-warning:     #FFFBEB;
+  --tint-discrepancy: #EFF6FF;
+
+  /* ── Spacing ── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+  --space-2xl: 64px;
+
+  /* ── Radii ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* ── Shadows ── */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+  --shadow-lg:  0 10px 40px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  --shadow-xl:  0 24px 64px rgba(0,0,0,.14), 0 8px 16px rgba(0,0,0,.06);
+  --shadow-brand: 0 8px 32px rgba(124,58,237,.25);
+
+  /* ── Typography ── */
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Transitions ── */
+  --ease: 0.22s cubic-bezier(.4,0,.2,1);
+  --ease-spring: 0.4s cubic-bezier(.34,1.56,.64,1);
+
+  /* ── Layout ── */
+  --header-h: 64px;
+}

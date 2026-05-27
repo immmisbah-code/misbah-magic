@@ -1,0 +1,66 @@
+/* ============================================================
+   Animations & Transitions
+   ============================================================ */
+
+/* ── Fade in ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeIn .3s var(--ease) both; }
+
+/* ── Slide up ── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up { animation: slideUp .35s var(--ease) both; }
+
+/* ── Pop in ── */
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(.92); }
+  70%  { transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.pop-in { animation: popIn .28s var(--ease) both; }
+
+/* ── Counter roll ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.count-up { animation: countUp .4s var(--ease) both; }
+
+/* ── Pulse (loading indicator) ── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .45; }
+}
+
+.pulse { animation: pulse 1.4s ease-in-out infinite; }
+
+/* ── Shimmer skeleton ── */
+@keyframes shimmer {
+  from { background-position: -600px 0; }
+  to   { background-position: 600px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f4fa 25%, #dce6f4 50%, #f0f4fa 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius-sm);
+  color: transparent !important;
+  user-select: none;
+}
+
+/* ── Staggered children ── */
+.stagger > *:nth-child(1) { animation-delay: .05s; }
+.stagger > *:nth-child(2) { animation-delay: .10s; }
+.stagger > *:nth-child(3) { animation-delay: .15s; }
+.stagger > *:nth-child(4) { animation-delay: .20s; }
+.stagger > *:nth-child(5) { animation-delay: .25s; }
