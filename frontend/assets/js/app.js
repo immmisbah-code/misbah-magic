@@ -4,7 +4,7 @@
  * and kicks off the initial state.
  *
  * Load order (see index.html):
- *   config.js → api.js → state.js → ui.js → uploader.js → results.js → app.js
+ *   config.js → api.js → state.js → ui.js → uploader.js → results.js → categorization.js → app.js
  */
 
 (async () => {
@@ -84,12 +84,40 @@
   loginForm?.addEventListener("submit", handleLogin);
 
   /* ─────────────────────────────────────────
-     6. Dashboard initialisation (run once after auth)
+     6. Module nav tab switching (Reconciliation ↔ Magic Cat)
+  ───────────────────────────────────────── */
+  function _initModuleNav() {
+    const btns = document.querySelectorAll(".module-nav__btn");
+    btns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const panelId = btn.dataset.panel;
+        // Update active button
+        btns.forEach(b => {
+          b.classList.toggle("module-nav__btn--active", b === btn);
+          b.setAttribute("aria-selected", b === btn ? "true" : "false");
+        });
+        // Show/hide panels
+        ["panel-recon", "panel-magiccat"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = (id === panelId) ? "" : "none";
+        });
+      });
+    });
+  }
+
+  /* ─────────────────────────────────────────
+     7. Dashboard initialisation (run once after auth)
   ───────────────────────────────────────── */
   let _dashboardInit = false;
   function initDashboard() {
     if (_dashboardInit) return;
     _dashboardInit = true;
+
+    /* Wire module nav */
+    _initModuleNav();
+
+    /* Init Magic Cat module */
+    if (typeof MagicCat !== "undefined") MagicCat.init();
 
     /* Bank zone — accepts PDF, Excel, or CSV */
     bankZone = Uploader.create({

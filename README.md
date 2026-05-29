@@ -16,16 +16,20 @@ pip install -r requirements.txt
 ### 2. Configure environment
 ```bash
 cp backend/.env.example backend/.env
-# Edit backend/.env and set your password + Gemini API key
+# Edit backend/.env — set USERS and GEMINI_API_KEY
 ```
 
-### 3. Start the backend
+### 3. Start the app
 ```bash
+# Development
 python backend/app.py
+
+# Production (gunicorn)
+gunicorn "backend.app:create_app()" --bind 0.0.0.0:8080
 ```
 
 ### 4. Open the frontend
-Open `frontend/index.html` in your browser (or serve it with any static server).
+Open `frontend/index.html` in your browser (or serve with any static server).
 
 ---
 
@@ -34,20 +38,54 @@ Open `frontend/index.html` in your browser (or serve it with any static server).
 ```
 misbah-magic/
 ├── backend/
-│   ├── app.py                  # Flask server (main entry point)
-│   ├── requirements.txt        # Python dependencies
-│   ├── .env.example            # Environment variables template
-│   └── utils/
-│       ├── excel_engine.py     # Core reconciliation logic
-│       ├── pdf_engine.py       # Gemini AI PDF extraction
-│       └── report_generator.py # Color-coded Excel report generation
+│   ├── app.py                          # Flask application factory
+│   ├── config.py                       # Config (env vars + defaults)
+│   ├── wsgi.py                         # Production WSGI entry point
+│   ├── requirements.txt
+│   ├── .env / .env.example
+│   │
+│   ├── core/                           # Shared infrastructure
+│   │   ├── dirs.py                     # Temp directory handles
+│   │   └── exceptions.py              # Custom app exceptions
+│   │
+│   ├── modules/                        # Feature modules (Blueprint-based)
+│   │   ├── auth/
+│   │   │   └── routes.py              # Login / session
+│   │   ├── reconciliation/
+│   │   │   ├── routes.py              # POST /api/reconcile/excel|pdf
+│   │   │   ├── excel_engine.py        # Load + normalise Excel/CSV files
+│   │   │   ├── pdf_engine.py          # Gemini AI PDF extraction
+│   │   │   └── fuzzy_matcher.py       # Core matching algorithm
+│   │   └── reports/
+│   │       ├── routes.py              # GET /api/reports/<filename>
+│   │       └── generator.py           # Color-coded Excel report writer
+│   │
+│   └── tests/                         # pytest test suite
+│       ├── test_fuzzy_matcher.py
+│       └── test_excel_engine.py
+│
 ├── frontend/
-│   ├── index.html              # Main UI
-│   ├── css/
-│   │   └── style.css           # All styles
-│   └── js/
-│       ├── api.js              # Backend API client
-│       └── app.js              # UI logic & state management
+│   ├── index.html                      # Main UI (single page)
+│   └── assets/
+│       ├── css/
+│       │   ├── variables.css          # Design tokens
+│       │   ├── base.css               # Reset + typography
+│       │   ├── components.css         # UI components
+│       │   └── animations.css         # Motion
+│       └── js/
+│           ├── config.js              # API base URL + constants
+│           ├── state.js               # App state management
+│           ├── api.js                 # Backend API client
+│           ├── uploader.js            # Drag-and-drop file handling
+│           ├── ui.js                  # DOM rendering helpers
+│           ├── results.js             # Results table + tabs
+│           └── app.js                 # Entry point + event wiring
+│
+├── docs/                               # Project documentation
+├── scripts/                            # Terminal / automation scripts
+├── render.yaml                         # Render.com deploy config
+├── run.sh                              # Local start script
+├── runtime.txt                         # Python version pin
 ├── .gitignore
 └── README.md
 ```
@@ -64,7 +102,7 @@ misbah-magic/
 | 📈 **Live Dashboard** | Matched, Missing, Duplicate, Discrepancy views |
 | 🔎 **Search & Filter** | Search across all transaction views |
 | ⬇️ **Excel Export** | Color-coded professional report download |
-| 🔒 **Secure Access** | Password-protected gateway |
+| 🔒 **Secure Access** | Password-protected gateway (multi-user supported) |
 
 ---
 
@@ -73,13 +111,30 @@ misbah-magic/
 Edit `backend/.env`:
 
 ```env
-ACCESS_PASSWORD=misbah2024          # App login password
-GEMINI_API_KEY=your_key_here        # For PDF mode (optional)
-PORT=5000
+# Multi-user format: "user1:pass1,user2:pass2"
+USERS=misbah:misbah2024
+
+GEMINI_API_KEY=your_key_here    # For PDF mode (optional)
+PORT=8080
 DEBUG=false
+
+# Matching tuning
+AMOUNT_TOLERANCE=0.01
+DATE_TOLERANCE_DAYS=3
+SIMILARITY_THRESHOLD=0.60
 ```
 
 Get a free Gemini API key at: https://aistudio.google.com/apikey
+
+---
+
+## 🧪 Running Tests
+
+```bash
+cd backend
+pip install pytest
+pytest tests/
+```
 
 ---
 
@@ -94,8 +149,9 @@ The app auto-detects column names (Date, Description/Memo, Amount).
 
 ## 🛠 Tech Stack
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Backend**: Python, Flask, Flask-CORS
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript (no framework)
+- **Backend**: Python 3.11+, Flask, Flask-CORS
 - **Processing**: pandas, openpyxl
 - **AI**: Google Gemini 1.5 Pro (PDF mode)
-- **Reports**: openpyxl (color-coded Excel)
+- **Reports**: openpyxl (color-coded Excel output)
+- **Deploy**: Render.com (render.yaml included)

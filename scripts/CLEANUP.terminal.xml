@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CommandString</key>
+	<string>echo "" &amp;&amp; echo "🧹 Misbah's Magic — Cleanup" &amp;&amp; echo "━━━━━━━━━━━━━━━━━━━━━━━━━━" &amp;&amp; cd ~/Desktop/misbah-magic &amp;&amp; rm -f run_gen_doc.sh gen_doc_py.py &amp;&amp; rm -rf backend/utils frontend/css frontend/js &amp;&amp; find . -name ".DS_Store" -delete &amp;&amp; find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null; echo "" &amp;&amp; echo "✅ Cleanup complete! Unnecessary files deleted." &amp;&amp; echo "" &amp;&amp; read -n1 -r -p "Press any key to close..." key</string>
+	<key>CustomTitle</key>
+	<string>🧹 Cleanup Unnecessary Files</string>
+	<key>AutoClose</key>
+	<false/>
+	<key>ProfileCurrentVersion</key>
+	<real>2.0699999999999998</real>
+	<key>RunCommandAsShell</key>
+	<false/>
+	<key>name</key>
+	<string>Basic</string>
+	<key>type</key>
+	<string>Window Settings</string>
+</dict>
+</plist>

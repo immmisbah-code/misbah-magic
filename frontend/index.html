@@ -128,6 +128,276 @@
     }
 
     /* ════════════════════════════════════════════════
+       MODULE NAV TABS (Reconciliation / Magic Cat)
+    ════════════════════════════════════════════════ */
+    .module-nav {
+      display: flex; align-items: center; gap: 4px;
+      background: var(--clr-bg); border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md); padding: 3px;
+    }
+    .module-nav__btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 7px;
+      border: none; background: none;
+      font-size: 13px; font-weight: 500; color: var(--clr-text-soft);
+      cursor: pointer; transition: all var(--ease); white-space: nowrap;
+    }
+    .module-nav__btn:hover { background: var(--clr-surface); color: var(--clr-text); }
+    .module-nav__btn--active {
+      background: var(--clr-surface);
+      color: var(--clr-primary);
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+    .module-nav__badge {
+      font-size: 9px; font-weight: 700; letter-spacing: .06em;
+      background: linear-gradient(135deg, #7C3AED, #10B981);
+      color: #fff; padding: 2px 6px; border-radius: 99px;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════════════════
+       MAGIC CAT — Core Styles
+    ════════════════════════════════════════════════ */
+    .mc-brand-icon { font-size: 28px; vertical-align: middle; }
+    .mc-brand-tag {
+      font-size: 13px; font-weight: 500; color: var(--clr-muted);
+      margin-left: 10px; vertical-align: middle;
+    }
+    .mc-header-actions { display: flex; align-items: center; gap: 12px; }
+
+    /* AI Toggle */
+    .mc-toggle-wrap {
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      font-size: 13px; font-weight: 500; color: var(--clr-text-soft);
+    }
+    .mc-toggle-wrap input { display: none; }
+    .mc-toggle-track {
+      width: 38px; height: 22px;
+      background: var(--clr-border); border-radius: 99px;
+      position: relative; transition: background .2s; flex-shrink: 0;
+    }
+    .mc-toggle-wrap input:checked + .mc-toggle-track { background: var(--clr-primary); }
+    .mc-toggle-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #fff; transition: transform .2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    .mc-toggle-wrap input:checked + .mc-toggle-track .mc-toggle-thumb {
+      transform: translateX(16px);
+    }
+
+    /* Upload Zone */
+    .mc-zone {
+      border: 2px dashed var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 32px; text-align: center;
+      cursor: pointer; transition: all var(--ease);
+      background: var(--clr-bg);
+    }
+    .mc-zone:hover, .mc-zone--over {
+      border-color: var(--clr-primary);
+      background: var(--clr-primary-light);
+    }
+    .mc-zone--has-file {
+      border-color: var(--clr-accent);
+      background: var(--clr-accent-light);
+    }
+    .mc-zone__icon { color: var(--clr-muted); margin-bottom: 12px; }
+    .mc-zone__label { font-weight: 600; color: var(--clr-text); margin-bottom: 6px; }
+    .mc-zone__hint  { font-size: 12px; color: var(--clr-muted); }
+
+    /* Manual form grid */
+    .mc-manual-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr 160px auto;
+      gap: 12px; align-items: start;
+    }
+    @media (max-width: 700px) {
+      .mc-manual-grid { grid-template-columns: 1fr 1fr; }
+      .mc-manual-grid .form-group:nth-child(2) { grid-column: span 2; }
+    }
+    .mc-input {
+      width: 100%; padding: 9px 12px;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      font-size: 13px; color: var(--clr-text);
+      background: var(--clr-surface);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .mc-input:focus {
+      border-color: var(--clr-primary);
+      box-shadow: 0 0 0 3px rgba(124,58,237,.12);
+    }
+    .form-label-light {
+      display: block; font-size: 11px; font-weight: 600;
+      color: var(--clr-muted); text-transform: uppercase;
+      letter-spacing: .05em; margin-bottom: 6px;
+    }
+
+    /* Loading card */
+    .mc-loading-card {
+      background: var(--clr-surface); border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg); padding: 24px 32px;
+      display: flex; align-items: center; gap: 16px;
+      margin-top: 16px; box-shadow: var(--shadow-sm);
+    }
+    .mc-loading__msg { font-weight: 600; color: var(--clr-text); }
+
+    /* Results Table */
+    .mc-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+    }
+    .mc-table th {
+      padding: 10px 12px; text-align: left;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--clr-muted);
+      background: var(--clr-bg); border-bottom: 1px solid var(--clr-border);
+      white-space: nowrap;
+    }
+    .mc-table td {
+      padding: 10px 12px; vertical-align: middle;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .mc-row:hover td { background: var(--clr-bg); }
+    .mc-row--approved td { background: rgba(5,150,105,.03); }
+
+    .mc-date { white-space: nowrap; color: var(--clr-muted); font-size: 12px; }
+    .mc-desc { max-width: 220px; }
+    .mc-amt  { font-weight: 600; font-family: var(--font-mono); white-space: nowrap; }
+    .mc-amt--credit { color: var(--clr-success); }
+    .mc-amt--debit  { color: var(--clr-danger); }
+    .mc-gl  { display: flex; flex-direction: column; gap: 2px; }
+    .mc-gl-code {
+      font-size: 10px; font-weight: 700; letter-spacing: .04em;
+      color: var(--clr-primary); font-family: var(--font-mono);
+    }
+    .mc-gl-name { font-size: 12px; font-weight: 500; color: var(--clr-text); }
+    .mc-ifrs { font-size: 11px; color: var(--clr-muted); white-space: nowrap; }
+    .mc-actions { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+
+    /* Confidence bar */
+    .mc-conf {
+      display: flex; align-items: center; gap: 8px; min-width: 80px;
+    }
+    .mc-conf__bar {
+      flex: 1; height: 5px; border-radius: 99px;
+      background: var(--clr-border);
+      position: relative; overflow: hidden;
+    }
+    .mc-conf__bar::after {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: var(--pct); height: 100%;
+      background: var(--clr);
+      transition: width .6s ease;
+    }
+    .mc-conf span { font-size: 12px; font-weight: 600; color: var(--clr-text-soft); }
+
+    /* Btn variants */
+    .btn--xs {
+      padding: 4px 8px; font-size: 11px; border-radius: var(--radius-sm);
+    }
+    .btn--primary {
+      background: var(--clr-primary); color: #fff;
+      border: none; cursor: pointer;
+      border-radius: var(--radius-md); padding: 8px 16px;
+      font-size: 13px; font-weight: 600;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn--primary:hover { opacity: .9; transform: translateY(-1px); }
+    .btn--ghost {
+      background: none; border: 1px solid var(--clr-border);
+      cursor: pointer; border-radius: var(--radius-md);
+      padding: 8px 12px; font-size: 13px; font-weight: 500;
+      color: var(--clr-text-soft); transition: all .15s;
+    }
+    .btn--ghost:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+
+    /* Empty state */
+    .mc-empty-state {
+      text-align: center; padding: 56px 24px;
+      color: var(--clr-text);
+    }
+    .mc-empty__icon { font-size: 48px; margin-bottom: 16px; }
+    .mc-empty-tab { text-align: center; padding: 32px; color: var(--clr-muted); font-size: 13px; }
+
+    /* Detail Modal */
+    .mc-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(15,23,42,.55);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9000; padding: 24px;
+    }
+    .mc-modal {
+      background: var(--clr-surface);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%; max-width: 680px;
+      max-height: 90vh; overflow-y: auto;
+    }
+    .mc-modal__header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--clr-border);
+    }
+    .mc-modal__header h3 { font-size: 16px; font-weight: 700; }
+    .mc-modal__close {
+      background: none; border: none; cursor: pointer;
+      color: var(--clr-muted); font-size: 18px; padding: 4px 8px;
+      border-radius: var(--radius-sm); transition: background .15s;
+    }
+    .mc-modal__close:hover { background: var(--clr-bg); }
+    .mc-modal__body { padding: 24px; }
+
+    .mc-detail-grid { display: flex; flex-direction: column; gap: 0; margin-bottom: 20px; }
+    .mc-detail-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 9px 0; border-bottom: 1px solid var(--clr-border);
+      font-size: 13px; gap: 16px;
+    }
+    .mc-detail-row span { color: var(--clr-muted); flex-shrink: 0; }
+    .mc-detail-row strong { color: var(--clr-text); text-align: right; }
+
+    .mc-detail-section { margin-top: 20px; }
+    .mc-detail-section h4 {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--clr-muted); margin-bottom: 8px;
+    }
+    .mc-reasoning {
+      font-size: 13px; line-height: 1.7; color: var(--clr-text-soft);
+      background: var(--clr-bg); border-radius: var(--radius-md);
+      padding: 12px 14px; border-left: 3px solid var(--clr-primary);
+    }
+    .mc-reasoning--risk { border-left-color: var(--clr-danger); }
+
+    .mc-alts { display: flex; flex-direction: column; gap: 8px; }
+    .mc-alt {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: var(--radius-md);
+      border: 1px solid var(--clr-border); font-size: 13px;
+      background: var(--clr-bg);
+    }
+    .mc-alt--primary { border-color: var(--clr-primary); background: var(--clr-primary-light); }
+    .mc-alt__rank {
+      font-size: 10px; font-weight: 700; color: var(--clr-muted);
+      min-width: 22px;
+    }
+    .mc-alt__code {
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      color: var(--clr-primary); min-width: 36px;
+    }
+    .mc-alt__name { flex: 1; font-weight: 500; }
+    .mc-alt__pick { margin-left: auto; }
+
+    .mc-detail-actions {
+      margin-top: 20px; padding-top: 16px;
+      border-top: 1px solid var(--clr-border);
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+
+    /* ════════════════════════════════════════════════
        BACKEND STATUS DOT
     ════════════════════════════════════════════════ */
     .backend-dot {
@@ -840,6 +1110,27 @@
         <span class="app-header__tagline">· Bank Reconciliation Platform</span>
       </div>
       <div class="app-header__right">
+        <!-- Module Nav Tabs -->
+        <nav class="module-nav" role="tablist">
+          <button id="nav-recon" class="module-nav__btn module-nav__btn--active"
+                  aria-selected="true" data-panel="panel-recon">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="5" y="2" width="14" height="20" rx="2"/>
+              <path d="M9 7h6M9 11h6M9 15h4"/>
+            </svg>
+            Reconciliation
+          </button>
+          <button id="nav-magiccat" class="module-nav__btn"
+                  aria-selected="false" data-panel="panel-magiccat">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              <path d="M9 10c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z" fill="currentColor"/>
+              <path d="M7 17c.83-1.21 2.17-2 3.5-2h3c1.33 0 2.67.79 3.5 2"/>
+            </svg>
+            Magic Cat
+            <span class="module-nav__badge">AI</span>
+          </button>
+        </nav>
         <span class="version-badge">v2.0</span>
         <div class="status-pill">
           <span id="backend-status-dash" class="backend-dot" title="Backend status"></span>
@@ -849,8 +1140,8 @@
     </div>
   </header>
 
-  <!-- Main -->
-  <main class="main-content">
+  <!-- ══ PANEL: Reconciliation ══════════════════════════════════ -->
+  <main id="panel-recon" class="main-content">
 
     <div class="page-title-row">
       <h1 class="page-title">New Reconciliation</h1>
@@ -943,7 +1234,146 @@
       </div>
 
     </section>
-  </main>
+  </main><!-- /panel-recon -->
+
+  <!-- ══ PANEL: Magic Cat AI Categorization ════════════════════ -->
+  <main id="panel-magiccat" class="main-content" style="display:none;">
+
+    <div class="page-title-row">
+      <div>
+        <h1 class="page-title">
+          <span class="mc-brand-icon">🐱</span> Magic Cat
+          <span class="mc-brand-tag">AI Accounting Intelligence</span>
+        </h1>
+        <p class="page-subtitle">IFRS/IAS-compliant GL categorization · CPA-level reasoning · Self-learning company memory</p>
+      </div>
+      <div class="mc-header-actions">
+        <label class="mc-toggle-wrap" title="Use Gemini AI for categorization (requires API key)">
+          <input type="checkbox" id="mc-use-ai" checked />
+          <span class="mc-toggle-track">
+            <span class="mc-toggle-thumb"></span>
+          </span>
+          <span class="mc-toggle-label">AI Mode</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Upload Card -->
+    <div class="upload-card">
+      <div class="upload-card__header">
+        <div>
+          <div class="upload-card__title">Batch Categorization</div>
+          <div class="upload-card__sub">Upload a CSV or Excel file with transactions — Magic Cat will categorize every row</div>
+        </div>
+      </div>
+      <div class="upload-card__body">
+        <div id="mc-upload-zone" class="mc-zone" tabindex="0" role="button"
+             aria-label="Upload transaction file">
+          <svg class="mc-zone__icon" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p class="mc-zone__label">Drop your CSV / Excel file here, or click to browse</p>
+          <p class="mc-zone__hint">Supports: .csv · .xlsx · .xls · Columns: Date, Description, Amount</p>
+          <input type="file" id="mc-file-input" accept=".csv,.xlsx,.xls" style="display:none" />
+        </div>
+        <div class="form-actions" style="margin-top:16px;">
+          <button id="mc-btn-run" class="btn btn--primary btn--lg">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
+            </svg>
+            Run Magic Cat
+          </button>
+          <button id="mc-btn-clear" class="btn btn--outline btn--sm">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manual Entry Card -->
+    <div class="upload-card" style="margin-top:16px;">
+      <div class="upload-card__header">
+        <div>
+          <div class="upload-card__title">Single Transaction Entry</div>
+          <div class="upload-card__sub">Manually enter one transaction for instant AI categorization</div>
+        </div>
+      </div>
+      <div class="upload-card__body">
+        <form id="mc-manual-form" class="mc-manual-grid">
+          <div class="form-group">
+            <label class="form-label-light" for="mc-manual-date">Date</label>
+            <input type="date" id="mc-manual-date" class="mc-input" />
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
+            <label class="form-label-light" for="mc-manual-desc">Description *</label>
+            <input type="text" id="mc-manual-desc" class="mc-input"
+                   placeholder="e.g. AWS invoice #12345 — cloud hosting" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label-light" for="mc-manual-amount">Amount (USD) *</label>
+            <input type="number" id="mc-manual-amount" class="mc-input"
+                   placeholder="-1250.00" step="0.01" required />
+          </div>
+          <div class="form-group" style="display:flex;align-items:flex-end;">
+            <button type="submit" id="mc-manual-submit" class="btn btn--primary btn--sm">
+              Categorize Now →
+            </button>
+          </div>
+        </form>
+        <p style="font-size:12px;color:var(--clr-muted);margin-top:8px;">
+          Negative amount = debit/expense · Positive = credit/income
+        </p>
+      </div>
+    </div>
+
+    <!-- Loading card -->
+    <div id="mc-loading" class="mc-loading-card" style="display:none;">
+      <div class="loading-spinner"></div>
+      <p class="mc-loading__msg">Magic Cat is thinking…</p>
+    </div>
+
+    <!-- Results Section -->
+    <section id="mc-results-section" style="margin-top:24px;">
+
+      <!-- Stats grid -->
+      <div id="mc-stats-grid" class="stats-row"></div>
+
+      <!-- Results Card -->
+      <div class="results-card" style="margin-top:20px;">
+        <div class="results-card__header">
+          <div class="results-card__title">Categorization Results</div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <div class="search-wrap">
+              <svg class="search-icon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+              </svg>
+              <input id="mc-search" class="search-input" type="search" placeholder="Search transactions…" />
+            </div>
+            <button id="mc-btn-approve-all" class="btn btn--success btn--sm">
+              ✓ Approve All Pending
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div id="mc-tabs" class="tabs-row" role="tablist"></div>
+
+        <!-- Table -->
+        <div class="results-body">
+          <div id="mc-table-wrap"></div>
+          <div id="mc-empty" class="mc-empty-state">
+            <div class="mc-empty__icon">🐱</div>
+            <p>Magic Cat is ready</p>
+            <p style="font-size:13px;color:var(--clr-muted);">
+              Upload a file or enter a transaction above to begin AI categorization.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main><!-- /panel-magiccat -->
 
   <!-- Footer -->
   <footer class="app-footer">
@@ -977,6 +1407,7 @@
 <script src="assets/js/ui.js"></script>
 <script src="assets/js/uploader.js"></script>
 <script src="assets/js/results.js"></script>
+<script src="assets/js/categorization.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

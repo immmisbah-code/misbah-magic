@@ -17,10 +17,12 @@ def create_app() -> Flask:
     from modules.auth            import auth_bp
     from modules.reconciliation  import recon_bp
     from modules.reports         import reports_bp
+    from modules.categorization  import cat_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(recon_bp)
     app.register_blueprint(reports_bp)
+    app.register_blueprint(cat_bp)
 
     # ── Serve frontend ────────────────────────────────────────────
     @app.route("/")

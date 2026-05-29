@@ -40,6 +40,22 @@ class Config:
     DATE_TOLERANCE_DAYS: int = int(os.getenv("DATE_TOLERANCE_DAYS", 3))
     SIMILARITY_THRESHOLD: float = float(os.getenv("SIMILARITY_THRESHOLD", 0.60))
 
+    # ── Magic Cat — AI Categorization ────────────────────────────────
+    # Materiality threshold: amounts above this may require asset capitalization
+    MATERIALITY_THRESHOLD: float = float(os.getenv("MATERIALITY_THRESHOLD", 2500.0))
+
+    # Persistent memory store (company learning data)
+    MEMORY_STORE_PATH: str = os.getenv(
+        "MEMORY_STORE_PATH",
+        os.path.join(os.path.dirname(__file__), "..", "data", "magic_cat_memory.json"),
+    )
+
+    # Chart of Accounts path (optional — uses built-in default if absent)
+    COA_PATH: str = os.getenv(
+        "COA_PATH",
+        os.path.join(os.path.dirname(__file__), "..", "data", "chart_of_accounts.json"),
+    )
+
     # Frontend path (relative to backend/)
     FRONTEND_DIR: str = os.path.join(os.path.dirname(__file__), "..", "frontend")
 

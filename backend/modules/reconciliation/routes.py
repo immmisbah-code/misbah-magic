@@ -10,7 +10,7 @@ from flask import request, jsonify
 from werkzeug.utils import secure_filename
 
 from config import config
-from dirs import get_upload_dir, get_report_dir
+from core.dirs import get_upload_dir, get_report_dir
 from . import recon_bp
 from .excel_engine import run_excel_reconciliation
 from .pdf_engine   import run_pdf_reconciliation

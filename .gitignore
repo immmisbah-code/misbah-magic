@@ -32,3 +32,17 @@ backend/reports/
 
 # Logs
 *.log
+
+# Office temp files (Word lock files)
+~$*.docx
+~$*.xlsx
+~$*.pptx
+
+# Test artifacts
+.pytest_cache/
+htmlcov/
+.coverage
+*.cover
+
+# Type checking
+.mypy_cache/
